@@ -4,7 +4,8 @@ from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 import json
-from motor.motor_asyncio import AsyncIOMotorClient
+from fastapi.responses import FileResponse
+from datetime import datetime
 
 app = FastAPI()
 
@@ -198,8 +199,6 @@ def generate_bot_json():
         # Specify the file path where you want to save the JSON data
         file_path = 'bot_flow.json'
 
-        print("ye hay data:",bot_json)
-
         # Write the data to the JSON file
         with open(file_path, 'w') as json_file:
             json.dump(bot_json, json_file, indent=4)
@@ -213,22 +212,4 @@ def generate_bot_json():
 def download_bot_json(response: Response):
     generate_bot_json()
     file_path = 'bot_flow.json'
-
-    # Set the content disposition to trigger a download
-    response.headers["Content-Disposition"] = f"attachment; filename={file_path}"
-
-    # Set the content type
-    response.headers["Content-Type"] = "application/json"
-
-    # Read the file and return its content
-    with open(file_path, 'rb') as file:
-        content = file.read()
-    
-
-    content_str = content.decode('utf-8')
-
-    # Load the JSON string and then dump it to unescape double quotes
-    json_data = json.loads(content_str)
-    json_string_cleaned = json.dumps(json_data, ensure_ascii=False)
-
-    return json_string_cleaned
+    return FileResponse(file_path, filename=f"botflow.json")
