@@ -168,7 +168,7 @@ class GetCustomJson:
         return state_dict
 
 # Fastapi code
-@app.get("/generate-bot-json")
+# @app.get("/generate-bot-json")
 def generate_bot_json():
     bot_json = {}
 
@@ -176,8 +176,12 @@ def generate_bot_json():
         response = requests.get(url)
         if response.status_code == 200:
             text = response.json()
-            get_custom_json = GetCustomJson()
-            return get_custom_json.forward(data=text, label_prefix=label_prefix)
+            nodes = text.get('nodes',[])
+            if len(nodes) > 1:
+                get_custom_json = GetCustomJson()
+                return get_custom_json.forward(data=text, label_prefix=label_prefix)
+            else:
+                return {}
         else:
             raise HTTPException(status_code=response.status_code, detail=f"Failed to retrieve data from {url}")
 
@@ -209,7 +213,7 @@ def generate_bot_json():
         raise e
 
 @app.get("/download-bot-json")
-def download_bot_json(response: Response):
+def download_bot_json():
     generate_bot_json()
     file_path = 'bot_flow.json'
     return FileResponse(file_path, filename=f"botflow.json")

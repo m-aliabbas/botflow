@@ -1,29 +1,15 @@
 {
     "S_HELLO ": {
-        "sec": "5",
+        "sec": "23",
         "fileName": "",
-        "S_PITCH ": [
+        "S_INTRO ": [
             {
-                "label": "HELLO "
+                "label": "POSITIVE "
             }
         ]
     },
-    "S_INTRO ": {
+    "S_BUSY ": {
         "sec": "5",
-        "fileName": "",
-        "disp_NP ": [
-            {
-                "label": "INTRO "
-            }
-        ]
-    },
-    "S_PITCH ": {
-        "sec": "5",
-        "fileName": "",
-        "S_NI ": [
-            {
-                "label": "PITCH "
-            }
-        ]
+        "fileName": ""
     }
 }
