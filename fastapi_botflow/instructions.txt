@@ -1,0 +1,4 @@
+Make and Run Conda Enviroment.
+Run "pip install -r requirements.txt".
+Make sure your mongodb database is running.
+Run "uvicorn app:app --reload".

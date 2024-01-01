@@ -1,0 +1,4 @@
+Make and Run Conda Enviroment.
+Run "npm install".
+Make sure your mongodb database is running.
+Run "npm start".
