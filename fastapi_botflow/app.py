@@ -99,25 +99,54 @@ class GetCustomJson:
 
         return connections
     
-    def create_label_based_connection_map(self,nodes, connections):
+    # def create_label_based_connection_map(self,nodes, connections):
+    #     """
+    #     Creates a dictionary with labels of bottom bar nodes as keys and lists of associated node data as values.
+
+    #     :param nodes: A list of all nodes (including bottom bar nodes and others).
+    #     :param connections: A dictionary of connections between bottom bar nodes and other nodes.
+    #     :return: A dictionary where keys are labels of bottom bar nodes and values are lists of data of connected nodes.
+    #     """
+    #     node_data_by_id = {node['id']: node for node in nodes}
+    #     label_based_connections = {}
+
+    #     for bottom_bar_node_id, connected_node_ids in connections.items():
+    #         bottom_bar_node_label = node_data_by_id[bottom_bar_node_id]['data']['label']
+    #         connected_nodes_data = [node_data_by_id[node_id]['data'] for node_id in connected_node_ids if node_id in node_data_by_id]
+
+    #         label_based_connections[bottom_bar_node_label] = connected_nodes_data
+
+    #     return label_based_connections
+
+    def create_label_based_connection_map(self, nodes, connections, bottom_bar_nodes):
         """
-        Creates a dictionary with labels of bottom bar nodes as keys and lists of associated node data as values.
+        Creates a dictionary with labels of bottom bar nodes as keys and dictionaries of associated node data as values.
 
         :param nodes: A list of all nodes (including bottom bar nodes and others).
         :param connections: A dictionary of connections between bottom bar nodes and other nodes.
-        :return: A dictionary where keys are labels of bottom bar nodes and values are lists of data of connected nodes.
+        :param bottom_bar_nodes: A list of bottom bar nodes.
+        :return: A dictionary where keys are labels of bottom bar nodes and values are dictionaries of connected nodes' data.
         """
         node_data_by_id = {node['id']: node for node in nodes}
         label_based_connections = {}
 
-        for bottom_bar_node_id, connected_node_ids in connections.items():
-            bottom_bar_node_label = node_data_by_id[bottom_bar_node_id]['data']['label']
-            connected_nodes_data = [node_data_by_id[node_id]['data'] for node_id in connected_node_ids if node_id in node_data_by_id]
+        bottom_bar_labels = {node['id']: node['data']['label'] for node in bottom_bar_nodes}
 
-            label_based_connections[bottom_bar_node_label] = connected_nodes_data
+        for bottom_bar_node_id, connected_node_ids in connections.items():
+            connected_nodes_data = {}
+            for node_id in connected_node_ids:
+                if node_id in node_data_by_id:
+                    node_data = node_data_by_id[node_id]['data']
+                    label = node_data['label']
+                    connected_nodes_data[label] = {
+                        "fileName": node_data.get('fileName', ''),
+                        "next_state": bottom_bar_labels[bottom_bar_node_id]
+                    }
+
+            label_based_connections[bottom_bar_labels[bottom_bar_node_id]] = connected_nodes_data
 
         return label_based_connections
-    
+        
     def find_disable_state_nodes(self,data):
         """
         Finds and returns all nodes with type 'disableStateNode' in the given data.
@@ -127,7 +156,46 @@ class GetCustomJson:
         """
         disable_state_nodes = [node for node in data['nodes'] if node['type'] == 'disableStateNode']
         return disable_state_nodes
-        
+
+    # def forward(self, data, label_prefix):
+    #     """
+    #     Processes the node data to map connections from 'stateNode' and 'disableStateNode' types to other nodes.
+
+    #     :param data: A dictionary containing 'nodes' and 'edges' from the JSON data structure.
+    #                 The 'nodes' list contains various node elements, while 'edges' define the connections between these nodes.
+    #     :return: A dictionary representing the state of each 'stateNode' and 'disableStateNode', 
+    #             along with their connections to other nodes.
+    #     """
+    #     if data == {}:
+    #         return{}
+    #     # Find all nodes with the type 'stateNode'
+    #     state_dict = self.find_state_nodes(data=data)
+
+    #     # Find all nodes with the className 'bottombarnode'
+    #     nodes_with_bottombarid = self.find_nodes_with_bottombarid(data=data)
+    #     nodes_with_bottombarid = self.update_labels_with_prefix(nodes_with_bottombarid,'disp_')
+    #     # Map connections of bottom bar nodes to other nodes
+    #     connection_with_bottom_bar_id = self.map_connections(nodes_with_bottombarid, data['edges'])
+
+    #     # Create a connection map with labels of bottom bar nodes and their connected nodes' data
+    #     connection_map1 = self.create_label_based_connection_map(data['nodes'], connection_with_bottom_bar_id)
+
+    #     # Find all nodes with the type 'disableStateNode'
+    #     dis_state_node = self.find_disable_state_nodes(data=data)
+    #     dis_state_node = self.update_labels_with_prefix(dis_state_node,'S_')
+    #     # Map connections of disabled state nodes to other nodes
+    #     connection_with_disable_bar_id = self.map_connections(dis_state_node, data['edges'])
+
+    #     # Create a connection map with labels of disabled state nodes and their connected nodes' data
+    #     connection_map2 = self.create_label_based_connection_map(data['nodes'], connection_with_disable_bar_id)
+
+    #     # Merge the connection maps into the state dictionary
+    #     for i in connection_map1:
+    #         state_dict[list(state_dict.keys())[0]][i] = connection_map1[i]
+    #     for i in connection_map2:
+    #         state_dict[list(state_dict.keys())[0]][i] = connection_map2[i]
+    #     return state_dict
+
     def forward(self, data, label_prefix):
         """
         Processes the node data to map connections from 'stateNode' and 'disableStateNode' types to other nodes.
@@ -138,33 +206,39 @@ class GetCustomJson:
                 along with their connections to other nodes.
         """
         if data == {}:
-            return{}
+            return {}
         # Find all nodes with the type 'stateNode'
         state_dict = self.find_state_nodes(data=data)
 
         # Find all nodes with the className 'bottombarnode'
         nodes_with_bottombarid = self.find_nodes_with_bottombarid(data=data)
-        nodes_with_bottombarid = self.update_labels_with_prefix(nodes_with_bottombarid,'disp_')
+        nodes_with_bottombarid = self.update_labels_with_prefix(nodes_with_bottombarid, label_prefix)
+        
         # Map connections of bottom bar nodes to other nodes
         connection_with_bottom_bar_id = self.map_connections(nodes_with_bottombarid, data['edges'])
 
         # Create a connection map with labels of bottom bar nodes and their connected nodes' data
-        connection_map1 = self.create_label_based_connection_map(data['nodes'], connection_with_bottom_bar_id)
+        connection_map1 = self.create_label_based_connection_map(data['nodes'], connection_with_bottom_bar_id, nodes_with_bottombarid)
 
         # Find all nodes with the type 'disableStateNode'
         dis_state_node = self.find_disable_state_nodes(data=data)
-        dis_state_node = self.update_labels_with_prefix(dis_state_node,'S_')
+        dis_state_node = self.update_labels_with_prefix(dis_state_node, 'S_')
         # Map connections of disabled state nodes to other nodes
         connection_with_disable_bar_id = self.map_connections(dis_state_node, data['edges'])
 
         # Create a connection map with labels of disabled state nodes and their connected nodes' data
-        connection_map2 = self.create_label_based_connection_map(data['nodes'], connection_with_disable_bar_id)
+        connection_map2 = self.create_label_based_connection_map(data['nodes'], connection_with_disable_bar_id, dis_state_node)
 
         # Merge the connection maps into the state dictionary
-        for i in connection_map1:
-            state_dict[list(state_dict.keys())[0]][i] = connection_map1[i]
-        for i in connection_map2:
-            state_dict[list(state_dict.keys())[0]][i] = connection_map2[i]
+        state_key = list(state_dict.keys())[0]
+        for label, connections in connection_map1.items():
+            for conn_label, conn_data in connections.items():
+                state_dict[state_key][conn_label] = conn_data
+
+        for label, connections in connection_map2.items():
+            for conn_label, conn_data in connections.items():
+                state_dict[state_key][conn_label] = conn_data
+
         return state_dict
 
 # Fastapi code
