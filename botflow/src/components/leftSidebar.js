@@ -1,6 +1,19 @@
-import React from 'react';
-import Button, { ButtonProps } from '@mui/material/Button';
+import React, { useState, useEffect} from 'react';
 
+import Button, { ButtonProps } from '@mui/material/Button';
+import { Modal, Box, TextField,IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
 export default () => {
   const onDragStart = (event, nodeType) => {
     event.dataTransfer.setData('application/reactflow', nodeType);
@@ -8,153 +21,104 @@ export default () => {
     event.dataTransfer.effectAllowed = 'move';
   };
 
+  const [open, setOpen] = useState(false);
+  const [text,setText] = useState('');
+  const [classNames, setClassNames] = useState([]);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:8000/save-pred_classes/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text }),
+      });
+      if (response.ok) {
+        console.log('Text saved successfully');
+      } else {
+        console.error('Failed to save text');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    handleClose();
+  };
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/get-pred_classes/');
+      if (response.ok) {
+        const data = await response.json();
+        setClassNames(data); // Update the state with the data
+      } else {
+        console.error('Failed to fetch data');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
  
   return (
     <aside>
       <div className="description">Class</div>
-      <div className="left-out">
-        <div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'POSITIVE')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-        Positive
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'NEGATIVE')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-     Negative
+      <div>
+      <Button variant="contained" onClick={handleOpen}>
+        Add Class
       </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'AM')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-        AM
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'BUSY')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-Busy
-       </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'DNC')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-        Dnc
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'ABUSE')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Abuse
-       </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'GREETING')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Greeting
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'LOCATION')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Location
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'NOT-INTERESTED')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-      Not Interested
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'SPANISH')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Spanish
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'OTHER')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-      Other
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'NONE')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       None
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'AGAIN')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Again
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'AFFORD')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Afford
-        </Button>
-      </div></div>
-      <div >
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'INSURED')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Insured
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'BOT')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       BOT
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'SORRY-GREETING')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Sorry Greeting
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, '  GREET-BACK')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Greet Back
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'REPITCH')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Repitch
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'EMAIL')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Email
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'QUALITY')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Quality
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'ARE-YOU-THERE')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Are you there
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'WHAT-INSURANCE')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       What insurance
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'MY-NUMBER')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       My Number
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'WHO-ARE-YOU')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-      Who are you
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'NEED-INFO')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-       Need Info
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'ALREADY-HAVE')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-      ALREADY HAVE
-        </Button>
-      </div>
-      <div className="sidebarnode" onDragStart={(event) => onDragStart(event, 'CALL-BACK')} draggable>
-      <Button variant="contained" className='leftsidebar-node'> 
-      CALL BACK
-        </Button>
-      </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} component="form" onSubmit={handleSubmit}>
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <TextField
+            label="Class Name"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <Button type="submit" variant="contained">
+            Submit
+          </Button>
+        </Box>
+      </Modal>
+    </div>
+
+      <div className="left-out">
+      <div className="flex-container">
+        {classNames.map((className, index) => (
+          <div
+            className="sidebarnode"
+            onDragStart={(event) => onDragStart(event, className.class_name)}
+            draggable
+            key={index}
+          >
+            <Button variant="contained" className='leftsidebar-node'>
+              {className.class_name}
+            </Button>
+          </div>
+        ))}
       </div>
       </div>
     </aside>

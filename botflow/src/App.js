@@ -16,7 +16,7 @@ import BinaryQState from './components/States/binaryQState';
 import EntityQState from './components/States/entityQState';
 import BotState from './components/States/botState';
 import TransferState from './components/States/TransferState';
-
+import PlaceHolderState from './components/States/placeholderState';
 
 // import Animation from '../src/Animation.js'
 function App() {
@@ -29,35 +29,7 @@ function App() {
 
         <Route path="/" element={<Home />}>
         </Route>
-        <Route path="/hello" element={<HelloState/>}>
-        </Route>
-        <Route path="/intro" element={<IntroState/>}>
-        </Route>
-        <Route path="/pitch" element={<PitchState/>}>
-        </Route>
-        <Route path="/pitch" element={<PitchState/>}>
-        </Route>
-        <Route path="/q1" element={<BinaryQState/>}>
-        </Route>
-        <Route path="/q2" element={<EntityQState/>}>
-        </Route>
-        <Route path="/busy" element={<BusyState/>}>
-        </Route>
-        <Route path="/ni" element={<NiState/> }>
-        </Route>
-        <Route path="/bot" element={<BotState/>}>
-        </Route>
-        <Route path="/transfer" element={<TransferState/>}>
-        </Route>
-        <Route path="/prev" element={<PrevState/> }>
-        </Route>
-        <Route path="/a" element={<CustomNodeA/>}>
-        </Route>
-        <Route path="/b" element={<CustomNodeB/> }>
-        </Route>
-        <Route path="/c" element={<CustomNodeC/> }>
-        </Route>
-
+        <Route path="/dyamic_states/:item" element={<PlaceHolderState/>}/>
       </Routes>
     </BrowserRouter>
     </>

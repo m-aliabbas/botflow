@@ -129,6 +129,7 @@
 }
 .sidebarnode {
   height: 20px;
+  width: 50%;
   margin-bottom: 12px !important;
   display: flex;
   justify-content: center;
@@ -380,4 +381,10 @@ margin-top: 10px;
 }
 .dis-able-state-node .react-flow__handle-top  {
   top : -12px !important;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }

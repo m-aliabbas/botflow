@@ -79,7 +79,7 @@ const Home = () => {
     try {
       // Log the nodes data for debugging
       console.log("Nodes Data:", nodes);
-      const response = await fetch('http://localhost:3001/home-flow', {
+      const response = await fetch('http://localhost:8000/save_state_flow/hello', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ const Home = () => {
   }; 
 const fetchFlowFromServer = async () => {
   try {
-    const response = await fetch('http://localhost:3001/get-home-flow');
+    const response = await fetch('http://localhost:8000/get_state_flow/hello');
     const data = await response.json();
     if (data.nodes && Array.isArray(data.nodes) && data.edges && Array.isArray(data.edges)) {
       const updatedNodes = data.nodes.map(node => {

@@ -79,7 +79,7 @@ const HelloState = () => {
     try {
       // Log the nodes data for debugging
       console.log("Nodes Data:", nodes);
-      const response = await fetch('http://localhost:3001/hello-flow', {
+      const response = await fetch('http://localhost:8000/hello-flow', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const HelloState = () => {
   };
   const handleDownload = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/download-bot-json', {
+      const response = await axios.get('http://127.0.0.1:3001/download-bot-json', {
         responseType: 'blob', // Set the response type to blob
       });
 
@@ -118,7 +118,7 @@ const HelloState = () => {
   }; 
 const fetchFlowFromServer = async () => {
   try {
-    const response = await fetch('http://localhost:3001/get-hello-flow');
+    const response = await fetch('http://localhost:8000/get-hello-flow');
     const data = await response.json();
     if (data.nodes && Array.isArray(data.nodes) && data.edges && Array.isArray(data.edges)) {
       const updatedNodes = data.nodes.map(node => {

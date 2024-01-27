@@ -1,15 +1,26 @@
 {
-    "S_HELLO ": {
-        "sec": "23",
-        "fileName": "",
-        "S_INTRO ": [
-            {
-                "label": "POSITIVE "
-            }
-        ]
-    },
-    "S_BUSY ": {
+    "S_Hello ": {
         "sec": "5",
-        "fileName": ""
+        "fileName": "",
+        "dnc ": {
+            "fileName": "",
+            "next_state": "disp_A "
+        },
+        "answering_machine ": {
+            "fileName": "",
+            "next_state": "disp_A "
+        }
+    },
+    "S_Intro ": {
+        "sec": "5",
+        "fileName": "",
+        "None ": {
+            "fileName": "",
+            "next_state": "disp_XFER "
+        },
+        "dnc ": {
+            "fileName": "",
+            "next_state": "S_PITCH "
+        }
     }
 }

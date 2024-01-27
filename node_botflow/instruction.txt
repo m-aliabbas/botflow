@@ -1,4 +1,0 @@
-Make and Run Conda enviroment.
-Run "npm install express cors mongodb".
-Make sure your mongodb is running in your device.
-Run "node server.js".
