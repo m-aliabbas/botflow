@@ -19,6 +19,7 @@ import StateNode from '../Nodes/StateNode';
 import DisableStateNode from '../Nodes/DisableStateNode';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+const { server_address} = require('../config');
 const initialNodes = [
   {
     id: '1',
@@ -83,7 +84,7 @@ const PlaceHolderState = () => {
         try {
           // Log the nodes data for debugging
           console.log("Nodes Data:", nodes);
-          const response = await fetch('http://localhost:8000/save_state_flow/' + item, {
+          const response = await fetch(server_address+'save_state_flow/' + item, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -99,7 +100,7 @@ const PlaceHolderState = () => {
       };
       const handleDownload = async () => {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/download-bot-json', {
+          const response = await axios.get(server_address+'download-bot-json', {
             responseType: 'blob', // Set the response type to blob
           });
     
@@ -122,7 +123,7 @@ const PlaceHolderState = () => {
       }; 
     const fetchFlowFromServer = async () => {
       try {
-        const response = await fetch('http://localhost:8000/get_state_flow/' + item,);
+        const response = await fetch(server_address+'get_state_flow/' + item,);
         const data = await response.json();
         
         if (data.nodes && Array.isArray(data.nodes) && data.edges && Array.isArray(data.edges)) {
