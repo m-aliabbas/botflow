@@ -1,390 +1,698 @@
+ 
+
+ 
  .dndflow {
+   flex-direction: column;
+   display: flex;
+   flex-grow: 1;
+   height: 80%;
+   /* height:80vh; */
+   /* background-color: #0d00ff; */
+ }
+
+ .dndnode { 
+  border-radius: 2px;
+  display: flex;
   flex-direction: column;
-  display: flex;
-  flex-grow: 1;
-  height: 100%;
+  text-align: center;
+  align-items: center;
+  cursor: grab;
+  /* background-color: #0fa3ff; */
 }
 
-.bottom-out{
+
+ @media screen and (min-width: 1000px) and (max-width: 5000px) {
+   .bottomsidebar-node {
+     width: 60px;
+     display: flex;
+     text-align: center;
+     align-items: center;
+     justify-content: center;
+     background-color: gray !important;
+     cursor: grab;
+     font-weight: bold !important;
+     text-decoration: none !important;
+     font-size: 8pt !important;
+   }
+   .bottom-add-icon{
+    cursor: grab;
+    border-radius: 50px;
+    padding: 2px;
+    color: white;
+    background-color: rgb(43, 43, 43) !important;
+    font-size: 15pt !important;
+    margin-left: 6px;
+    margin-top: 3px;
+   }
+   .bottom-add-icon:hover{
+    background-color: white !important;
+    color: black;
+   }
+
+ .description {
+  /* background-color: #cdcdcd; */
+  background-color: black;
+  color: white;
+  width: 140px;
+  height: 38px;
+  border-radius: 50px;
   display: flex;
-  border-top:  1px solid rgb(212, 212, 212);
-  padding: 10px;
-  text-align: center !important;
+  align-items: center;
   justify-content: center;
-}
-.dndflow aside {
-  border: 1px solid #c4c4c4;
-  padding: 15px 10px;
-  width: 320px !important;
-  font-size: 12px;
-  background: #ffffff;
-  height: 74%;
-}
-
-.description {
   text-align: center;
   font-weight: bold;
-  font-size: large;
-  margin-bottom: 10px;
+  font-family:  Narrow, sans-serif;
+  font-size: 10pt;
+  /* margin-bottom: 10px; */
   margin-top: 4px;
 }
-.dndflow .dndnode {
-  height: 20px;
-  padding: 4px;
-  border-radius: 2px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: grab; 
- 
+aside .right-sidebar{
+  padding: 15px 10px;
+  width: 140px !important;
+  border-left: 1px solid rgb(184, 184, 184);
+  /* font-size: 12px; */
+  background: #ffffff;
+  min-height: 450px;
+  max-height: 450px !important;
+  overflow-y: scroll;
+
 }
-.navlink{
+
+aside .leftsidebar{
+  /* border-right: 1px solid rgb(184, 184, 184); */
+  padding: 15px 10px;
+  width: 230px !important;
+  /* font-size: 12px; */
+  background: #ffffff;
+  min-height: 400px !important;
+  max-height: 400px !important;
+  overflow-y: scroll;
+}
+
+
+.sidebar-node {
+  width: 100px;
+  display: flex;
+  background-color: #053c5e !important;
+  cursor: grab;
+  font-weight: bold !important;
+  text-decoration: none !important;
+  font-size: 9pt !important;
+  /* background-color: #0d00ff !important; */
+}
+
+.leftsidebar-node {
+  width: 100px;
+  display: flex;
+  background-color: #81c0ff !important;
+  cursor: grab;
+  border: none !important;
+  color: rgb(253, 253, 253);
+  overflow: hidden;
+  font-weight: bold !important;
+  text-decoration: none !important;
+  font-size: 9pt !important;
+}
+
+.navlink {
   color: white;
   font-weight: bold;
   text-decoration: none;
-  font-size: 9pt;
+  font-size: 9pt !important;
 }
-.navlink:hover{
-  color:#777 !important;
+
+.navlink:hover {
+  color: #777 !important;
   font-weight: bold;
-  scale: 1.1;
   text-decoration: none;
-  font-size: 9pt;
+  font-size: 9pt !important;
 }
-.sidebar-node{
-  width: 150px;
+
+.bottomnode-d {
+  margin: 5px;
+}
+.sidebar-node-d{
+ margin: 3px;
+}
+.leftsidebar-node-d{
+  margin: 3px;
+}
+
+.button-out {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+   height: 50px;
+   /* background-color: aqua; */
+   border-top: 1px solid rgb(196, 196, 196);
+ }
+ .icon-out{
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 70%;
+  justify-content: center;
+  background-color: rgb(0, 0, 0);
+  border-radius: 20px;
+ }
+
+ .bottom-button {
+  background-color:black;
+  color: rgba(183, 183, 183, 0.578) !important;
+  padding: 4px;
+  border: none;
+  border-radius: 50px;
+  margin: 3px;
+}
+.bottom-button :hover {
+  background-color:black;
+  color: rgb(255, 255, 255) !important;
+  border: none;
+  border-radius: 50px;
+}
+
+ }
+
+
+ @media screen and (max-width: 1000px) {
+   .bottomsidebar-node {
+     width: 40px !important;
+     display: flex;
+     text-align: center;
+     align-items: center;
+     justify-content: center;
+     background-color: gray !important;
+     cursor: grab;
+     font-weight: bold !important;
+     text-decoration: none !important;
+     font-size: 5pt !important;
+   }
+   .bottom-add-icon{
+    cursor: grab;
+    border-radius: 50px;
+    padding: 0px;
+    color: white;
+    background-color: green !important;
+    font-size: 12pt !important;
+    margin-left: 6px;
+    margin-top: 2px;
+   }
+
+ .description {
+  background-color: #000000;
+  color: white;
+  border-radius: 50px;
+  width: 100px;
+  height: 28px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-family:  Narrow, sans-serif;
+  font-weight: bold;
+  font-size: 7pt;
+  /* padding: 5px; */
+  /* margin-bottom: 10px; */
+  /* margin-top: 4px; */
+}
+
+aside .right-sidebar{
+  padding: 15px 10px;
+  width: 90px !important;
+  font-size: 12px;
+  background: #ffffff;
+
+}
+
+aside .leftsidebar{
+  padding: 15px 10px;
+  width: 160px !important;
+  font-size: 12px;
+  background: #ffffff;
+  overflow-y: scroll;
+  min-height: 320px !important;
+  max-height: 320px !important;
+  overflow-y: scroll
+
+}
+
+
+.sidebar-node {
+  width: 70px;
+  display: flex;
+  font-weight: bold;
   background-color: #053c5e !important;
-  cursor: grab; 
+  cursor: grab;
+  font-size: 5pt !important;
 }
-.leftsidebar-node{
-  width: 150px;
+
+.leftsidebar-node {
+  width: 70px;
+  overflow: hidden;
   display: flex;
-  background-color:  #81c0ff !important;
-  cursor: grab; 
+  background-color: #81c0ff !important;
+  cursor: grab;
   border: none !important;
   color: white;
   font-weight: bold !important;
   text-decoration: none !important;
-  font-size: 9pt !important;
-}
-
-.dndflow .reactflow-wrapper {
-  flex-grow: 1;
-  height: 88vh;
-  background: #f9f9f9;
-}
-
-@media screen and (min-width: 768px) {
-  .dndflow {
-    flex-direction: row;
-  }
-
-  .dndflow aside {
-    width: 20%;
-    /* max-width: 250px; */
-  }
-}
-
-.text-updater-node {
-  height: 50px;
-  border: 1px solid #eee;
-  padding: 5px;
-  border-radius: 5px;
-  background: white;
-}
-
-.text-updater-node label {
-  display: block;
-  color: #685353;
-  font-size: 12px;
-}
-
-.react-flow .react-flow__handle {
-  width: 8px;
-  height: 8px;
-  border-radius: 100px;
-  background-color: #000000;
-}
-
-
-.react-flow .react-flow__node {
-  height: 40px;
-  width: 150px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-.dndflow .sidebarnode {
-  height: 20px;
-  padding: 4px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: grab;
-}
-.sidebarnode {
-  height: 20px;
-  width: 50%;
-  margin-bottom: 12px !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: grab;
-}
-
-.dndflow .bottombarnode {
-  width: 80px !important;
-    height: 80px !important;
-    padding: 4px;
-    border: 2px solid gray;
-    background-color: rgba(128, 128, 128, 0.13) !important;
-    border-radius: 100% !important;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: grab;
-  }
-   .bottombarnode {
-  width: 150px;
-    height: 20px;
-    padding: 4px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: grab;
-  }
-
-.bottomsidebar-node{
-  width: 150px;
-  display: flex;
-  background-color:gray !important;
-  cursor: grab; 
-  font-weight: bold !important;
-  text-decoration: none !important;
-  font-size: 9pt !important;
-
-}
-
-.input-lable{
-  height: 28px;
-  border-radius: 4px;
-  border: #0d00ff solid 1px;
-  padding-left: 5px;
-}
-
-.update-button{
-  padding: 8px;
-  width: 120px;
-  border: 1px solid #0d00ff;
-  border-radius: 4px;
-  margin: 5px;
-}
-.pra {
-  cursor: pointer;
-}
-.pra:hover {
-  cursor: pointer;
-}
-.file-selector-node {
-  width: 400PX !important;
-  height: 90px;
-  border: 2px solid #81c0ff;
-  background-color:#81c0ff25 !important;
-  padding: 10px !important;
-  border-radius: 8px;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  text-align: center;
-}
-body {
-  padding: 0px;
-  margin: 0px;
-}
-.file-input-container {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.file-input-container label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-#file-input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.state-node .react-flow__handle-bottom {
-  bottom : -56px !important;
-}
-.state-node .react-flow__handle-top  {
-  top : -56px !important;
-}
-
-.react-flow .react-flow__handle-top {
-  top: -6px;
-}
-.react-flow .react-flow__handle-bottom {
-  bottom: -6px;
-}
-
-.file-selector-node .react-flow__handle-bottom {
-  bottom: -40px;
-}
-.file-selector-node .react-flow__handle-top {
- top: -40px;
-}
-
-.state-node {
-  width: 400PX !important;
-  height: 120px;
-  overflow: hidden !important;
-  border: 2px solid #053c5e;
-  background-color: #053c5e23 !important ;
-  padding: 10px;
-  border-radius: 8px;
-  background-color: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  text-align: center;
-  width: 450px;
-}
-
-.state-node label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.state-node input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.state-node input[type="number"] {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.file-input-label {
-  margin-bottom: 5px;
-  font-size: 8pt;
-  border-bottom: #000000 solid 1px;
-  padding-bottom: 6px;
-}
-
-.file-select-button {
-  padding: 3px 10px 2px 10px !important;
-border: none;
-scale: 0.6;
-font-weight: bold !important;
-  border-radius: 3px !important;
-  cursor: pointer !important;
-  margin-bottom: 4px !important;
-  font-size: 6pt !important;
-  background-color: rgb(255, 255, 255) !important;
-  color: black !important;
-}
-
-.file-name-display {
-  color: black;
   font-size: 5pt !important;
 }
 
-.numbers{
+.navlink {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
   font-size: 5pt !important;
-margin-top: 10px;
 }
-.input-numbers{
-  border: #000000 1px solid !important;
-  width: 100px !important;
-  height: 5px;
-  margin-bottom: 0px !important;
-  font-size: 8pt;
+
+.navlink:hover {
+  color: #777 !important;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 5pt !important;
 }
-.edit-label-modal{
-  height: 50px;
+
+.bottomnode-d {
+  margin: 2px;
+}
+.sidebar-node-d{
+ margin: 2px;
+}
+.leftsidebar-node-d{
+  margin: 2px;
+}
+
+
+.button-out {
+  display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  display: flex;
-  justify-content: center;
-}
-.button-out{
+   height: 50px;
+   border-top: 1px solid rgb(196, 196, 196);
+   /* background-color: aqua; */
+ }
+ .icon-out{
   display: flex;
   align-items: center;
-  flex-direction: column;
-  padding: 10px;
-  height: auto;
-  justify-content: center;
-}
-.bottom-button{
-  padding: 8px; 
-  border: 1px solid #0d00ff;
-  border-radius: 4px;
-  margin: 5px;
-  width: 150px;
-}
-.nav-link{
-  text-decoration: none !important;
-  color: black;
-}
-
-.left-out{
-  display: flex;
-  /* background-color: #053c5e; */
-  /* width: 600px !important; */
-}
-
-.dis-able-state-node {
-  width: 400PX !important;
   height: 30px;
-  overflow: hidden !important;
-  border: 2px solid #053c5e;
-  background-color: #053c5e23 !important ;
-  padding: 10px;
-  border-radius: 8px;
-  /* background-color: white; */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  text-align: center;
-  justify-content: center !important;
-  align-items: center !important;
-  display: flex;
-  width: 220px !important;
-}
+  width: 82%;
+  justify-content: center;
+  background-color: rgb(0, 0, 0);
+  border-radius: 20px;
 
-.dis-able-state-node label {
-  display: block;
-  margin-top: 8px !important;
+ }
+
+ .bottom-button {
+  background-color:black;
+  color: rgba(183, 183, 183, 0.578) !important;
   border: none;
-  font-weight: bold;
-  font-size: 10pt;
+  border-radius: 50px;
 }
 
-.dis-able-state-node .react-flow__handle-bottom {
-  bottom : -12px !important;
-}
-.dis-able-state-node .react-flow__handle-top  {
-  top : -12px !important;
+.bottom-button :hover {
+  background-color:black;
+  color: rgb(255, 255, 255) !important;
+  border: none;
+  border-radius: 50px;
 }
 
-.flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
+
+ }
+
+ @media screen and (min-width: 800px) and (max-width: 5000px) {
+
+   /* page scrollbar */
+   /* Corrected Webkit Scrollbar styles */
+   ::-webkit-scrollbar {
+     width: 8px;
+   }
+
+   ::-webkit-scrollbar-track {
+     background: #f1f1f1;
+     /* Color of the tracking area */
+   }
+
+   ::-webkit-scrollbar-thumb {
+     background: #888;
+     /* Color of the scroll thumb */
+     border-radius: 5px;
+     /* Rounded corners on the scroll thumb */
+   }
+
+   ::-webkit-scrollbar-thumb:hover {
+     background: #555;
+     /* Color when the scroll thumb is hovered */
+   }
+
+ }
+
+
+ @media screen and (max-width: 800px) {
+
+   /* page scrollbar */
+   /* Corrected Webkit Scrollbar styles */
+   ::-webkit-scrollbar {
+     width: 5px;
+   }
+
+   ::-webkit-scrollbar-track {
+     background: #f1f1f1;
+     /* Color of the tracking area */
+   }
+
+   ::-webkit-scrollbar-thumb {
+     background: #888;
+     /* Color of the scroll thumb */
+     border-radius: 5px;
+     /* Rounded corners on the scroll thumb */
+   }
+
+   ::-webkit-scrollbar-thumb:hover {
+     background: #555;
+     /* Color when the scroll thumb is hovered */
+   }
+
+ }
+
+ .bottom-out {
+   display: flex;
+   border-top: 1px solid rgb(212, 212, 212);
+   padding: 5px;
+   text-align: center !important;
+   justify-content: center;
+   overflow: hidden;
+   /* overflow-x: scroll; */
+   /* background-color: #81c0ff; */
+   /* Add a fixed width or max-width if necessary */
+ }
+
+
+
+ .dndflow .reactflow-wrapper {
+   flex-grow: 1;
+   /* height: 100vh; */
+
+   min-height: 400px;
+   background: #f9f9f9;
+ }
+
+ @media screen and (min-width: 500px) {
+   .dndflow {
+     flex-direction: row;
+   }
+ }
+
+ .text-updater-node {
+   height: 50px;
+   border: 1px solid #eee;
+   padding: 5px;
+   border-radius: 5px;
+   background: white;
+ }
+
+ .text-updater-node label {
+   display: block;
+   color: #685353;
+   font-size: 12px;
+ }
+
+ .react-flow .react-flow__handle {
+   width: 8px;
+   height: 8px;
+   border-radius: 100px;
+   background-color: #000000;
+ }
+
+
+ .react-flow .react-flow__node {
+   height: 40px;
+   width: 150px;
+   justify-content: center;
+   align-items: center;
+   display: flex;
+ }
+
+ 
+ .sidebarnode {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   /* background-color:red ; */
+   margin-bottom: 12px !important;
+   justify-content: center;
+  text-align: center;
+   cursor: grab;
+ }
+
+ .dndflow .bottombarnode {
+   width: 80px !important;
+   height: 80px !important;
+   padding: 4px;
+   border: 2px solid gray;
+   background-color: rgba(128, 128, 128, 0.13) !important;
+   border-radius: 100% !important;
+ }
+
+ .bottombarnode {
+   /* padding: 4px; */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   cursor: grab;
+   /* background-color: #0d00ff; */
+ }
+
+
+
+
+
+ .edit-label-modal {
+   height: 50px;
+   align-items: center;
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   border-top: 1px solid rgb(177, 177, 177);
+   /* background-color: #0d00ff; */
+ }
+
+ .input-lable {
+   height: 28px;
+   border-radius: 4px;
+   border: #0d00ff solid 1px;
+   padding-left: 5px;
+   width: 300px;
+ }
+
+ .update-button {
+   padding: 8px;
+   width: 120px;
+   background-color: black;
+   color: white;
+   border:none;
+   border-radius: 4px;
+   margin: 5px;
+ }
+
+ .pra {
+   cursor: pointer;
+ }
+
+ .pra:hover {
+   cursor: pointer;
+ }
+
+ .file-selector-node {
+   width: 400PX !important;
+   height: 90px;
+   border: 2px solid #81c0ff;
+   background-color: #81c0ff25 !important;
+   padding: 10px !important;
+   border-radius: 8px;
+   background-color: rgb(255, 255, 255);
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+   text-align: center;
+ }
+
+ body {
+   padding: 0px;
+   margin: 0px;
+   overflow-x: hidden;
+ }
+
+ .file-input-container {
+   margin-top: 10px;
+   margin-bottom: 10px;
+ }
+
+ .file-input-container label {
+   display: block;
+   margin-bottom: 5px;
+   font-weight: bold;
+ }
+
+ #file-input {
+   width: 100%;
+   padding: 8px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+ }
+
+ .state-node .react-flow__handle-bottom {
+   bottom: -56px !important;
+ }
+
+ .state-node .react-flow__handle-top {
+   top: -56px !important;
+ }
+
+ .react-flow .react-flow__handle-top {
+   top: -6px;
+ }
+
+ .react-flow .react-flow__handle-bottom {
+   bottom: -6px;
+ }
+
+ .file-selector-node .react-flow__handle-bottom {
+   bottom: -40px;
+ }
+
+ .file-selector-node .react-flow__handle-top {
+   top: -40px;
+ }
+
+ .state-node {
+   width: 400PX !important;
+   height: 120px;
+   overflow: hidden !important;
+   border: 2px solid #053c5e;
+   background-color: #053c5e23 !important;
+   padding: 10px;
+   border-radius: 8px;
+   background-color: white;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+   text-align: center;
+   width: 450px;
+ }
+
+ .state-node label {
+   display: block;
+   margin-bottom: 5px;
+   font-weight: bold;
+ }
+
+ .state-node input[type="text"] {
+   width: 100%;
+   padding: 8px;
+   margin-bottom: 10px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+ }
+
+ .state-node input[type="number"] {
+   width: 100%;
+   padding: 8px;
+   margin-bottom: 10px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+ }
+
+ .file-input-label {
+   margin-bottom: 5px;
+   font-size: 8pt;
+   border-bottom: #000000 solid 1px;
+   padding-bottom: 6px;
+ }
+
+ .file-select-button {
+   padding: 3px 10px 2px 10px !important;
+   border: none;
+   scale: 0.6;
+   font-weight: bold !important;
+   border-radius: 3px !important;
+   cursor: pointer !important;
+   margin-bottom: 4px !important;
+   font-size: 6pt !important;
+   background-color: rgb(255, 255, 255) !important;
+   color: black !important;
+ }
+
+ .file-name-display {
+   color: black;
+   font-size: 5pt !important;
+ }
+
+ .numbers {
+   font-size: 5pt !important;
+   margin-top: 10px;
+ }
+
+ .input-numbers {
+   border: #000000 1px solid !important;
+   width: 100px !important;
+   height: 5px;
+   margin-bottom: 0px !important;
+   font-size: 8pt;
+ }
+
+
+ 
+
+ .nav-link {
+   text-decoration: none !important;
+   background-color: black;
+   color: rgba(183, 183, 183, 0.578) !important;
+   /* padding: 4px; */
+   border: none;
+   border-radius: 50px;
+   /* margin: 3px; */
+ }
+
+ .left-out {
+   display: flex;
+   /* background-color: #053c5e; */
+   /* width: 600px !important; */
+ }
+
+ .dis-able-state-node {
+   width: 400PX !important;
+   height: 30px;
+   overflow: hidden !important;
+   border: 2px solid #053c5e;
+   background-color: #053c5e23 !important;
+   padding: 10px;
+   border-radius: 8px;
+   /* background-color: white; */
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+   text-align: center;
+   justify-content: center !important;
+   align-items: center !important;
+   display: flex;
+   width: 220px !important;
+ }
+
+ .dis-able-state-node label {
+   display: block;
+   margin-top: 8px !important;
+   border: none;
+   font-weight: bold;
+   font-size: 10pt;
+ }
+
+ .dis-able-state-node .react-flow__handle-bottom {
+   bottom: -12px !important;
+ }
+
+ .dis-able-state-node .react-flow__handle-top {
+   top: -12px !important;
+ }
+
+ .flex-container {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: flex-start;
+ }

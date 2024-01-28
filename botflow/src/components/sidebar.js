@@ -1,9 +1,11 @@
 import React from 'react';
 import Button, { ButtonProps } from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
 import { NavLink } from 'react-router-dom';
 import { useState, useEffect} from 'react';
 import { Modal, Box, TextField,IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+const { server_address} = require('./config');
 const style = {
   position: 'absolute',
   top: '50%',
@@ -31,7 +33,7 @@ export default () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/save-state/', {
+      const response = await fetch(server_address+'save-state/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,12 +49,13 @@ export default () => {
       console.error('Error:', error);
     }
     setRefreshKey((oldKey) => oldKey + 1);
+    setText("");
     handleClose();
   };
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:8000/get-states/');
+      const response = await fetch(server_address+'get-states/');
       if (response.ok) {
         const data = await response.json();
         setClassNames(data); // Update the state with the data
@@ -69,16 +72,12 @@ export default () => {
 
 
   return (
+    <>
     <aside>
-     {/* a31621
-      bfdbf7
-      053c5e */}
       <div className='right-sidebar'>
-      <div className="description">States</div>
+    
       <div>
-      <Button variant="contained" onClick={handleOpen}>
-        Add States
-      </Button>
+     
       <Modal
         open={open}
         onClose={handleClose}
@@ -98,22 +97,30 @@ export default () => {
             <CloseIcon />
           </IconButton>
           <TextField
-            label="Class Name"
+            label="Enter State Name"
             variant="outlined"
             fullWidth
             margin="normal"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
-          <Button type="submit" variant="contained">
-            Submit
+          <Button type="submit" variant="contained" style={{background:"black"}}>
+            Add State
           </Button>
         </Box>
       </Modal>
     </div>
+
+<div className="dndnode">
+<div className="description">STATES
+<div  onClick={handleOpen} >
+           <AddIcon className='bottom-add-icon'/>
+          </div>
+          </div>
+    
     {classNames.map((className, index) => (
           <div
-            className="dndnode"
+            className='sidebar-node-d'
             onDragStart={(event) => onDragStart(event, className.class_name)}
             draggable
             key={index}
@@ -127,7 +134,12 @@ export default () => {
           </div>
         ))}
       
+        </div>
+      
       </div>
     </aside>
+
+
+  </>
   );
 };

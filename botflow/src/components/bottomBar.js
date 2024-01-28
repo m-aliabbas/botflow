@@ -1,9 +1,9 @@
-import React, { useState, useEffect} from 'react';
-
+import React, { useState, useEffect } from 'react';
+import AddIcon from '@mui/icons-material/Add';
 import Button, { ButtonProps } from '@mui/material/Button';
-import { Modal, Box, TextField,IconButton } from '@mui/material';
+import { Modal, Box, TextField, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
+const { server_address } = require('./config');
 const style = {
   position: 'absolute',
   top: '50%',
@@ -21,8 +21,9 @@ export default () => {
     event.dataTransfer.setData('bottomBarNode', true); // Add this line
     event.dataTransfer.effectAllowed = 'move';
   };
+  const [refreshKey, setRefreshKey] = useState(0);
   const [open, setOpen] = useState(false);
-  const [text,setText] = useState('');
+  const [text, setText] = useState('');
   const [classNames, setClassNames] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -30,7 +31,7 @@ export default () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/save-disposition/', {
+      const response = await fetch(server_address + 'save-disposition/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,12 +46,14 @@ export default () => {
     } catch (error) {
       console.error('Error:', error);
     }
+    setRefreshKey((oldKey) => oldKey + 1);
+    setText("");
     handleClose();
   };
-  
+
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:8000/get-dispositions/');
+      const response = await fetch(server_address + 'get-dispositions/');
       if (response.ok) {
         const data = await response.json();
         setClassNames(data); // Update the state with the data
@@ -63,51 +66,59 @@ export default () => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [refreshKey]);
 
   return (
     <aside>
-     <div className='bottom-out'>
-      <div className="description">Disposition  </div>
-      <div>
-      <Button variant="contained" onClick={handleOpen}>
-        Add Disposition
-      </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style} component="form" onSubmit={handleSubmit}>
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-            }}
+      <div className='bottom-out'>
+   
+        <div>
+        
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
           >
-            <CloseIcon />
-          </IconButton>
-          <TextField
-            label="Class Name"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-          <Button type="submit" variant="contained">
-            Submit
-          </Button>
-        </Box>
-      </Modal>
-    </div>
-    {classNames.map((className, index) => (
+            <Box sx={style} component="form" onSubmit={handleSubmit}>
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+              <TextField
+                label="Enter Disposition Name"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <Button type="submit" variant="contained" style={{background:"black"}}>
+                Add Disposition
+              </Button>
+            </Box>
+          </Modal>
+        </div>
+
+
+        <div  className="bottombarnode">
+
+               <div className="description">DISPOSITIONS
+               <div  onClick={handleOpen} >
+           <AddIcon className='bottom-add-icon'/>
+          </div>
+           </div>
+               
+        {classNames.map((className, index) => (
           <div
-            className="bottombarnode"
+          className='bottomnode-d'
             onDragStart={(event) => onDragStart(event, className.class_name)}
             draggable
             key={index}
@@ -117,7 +128,9 @@ export default () => {
             </Button>
           </div>
         ))}
-      
+        
+        </div>
+
       </div>
     </aside>
   );

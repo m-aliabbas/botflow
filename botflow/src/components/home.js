@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback,useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -6,6 +6,7 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   Controls,
+  MiniMap
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import Sidebar from './sidebar';
@@ -13,11 +14,16 @@ import LeftSidebar from './leftSidebar';
 import BottomBar from './bottomBar';
 import './index.css';
 import { NavLink } from 'react-router-dom';
-import FileSelectorNode  from './Nodes/PredClass';
+import FileSelectorNode from './Nodes/PredClass';
 import StateNode from './Nodes/StateNode';
 import DisableStateNode from './Nodes/DisableStateNode';
 import axios from 'axios';
-const { server_address} = require('./config');
+import HomeIcon from '@mui/icons-material/Home';
+import SaveIcon from '@mui/icons-material/Save';
+import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddBottomPart from './AddBottomPart';
+const { server_address } = require('./config');
 const initialNodes = [
   {
     id: '1',
@@ -40,7 +46,7 @@ const Home = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [tempLabel, setTempLabel] = useState('');
 
-  const [isStateNodeAdded , setStateNodeAdded] = useState(false);
+  const [isStateNodeAdded, setStateNodeAdded] = useState(false);
 
   const [baseNodeCounter, setCounterNode] = useState(0); //ALI
   let counter = 0; // ALI
@@ -70,9 +76,9 @@ const Home = () => {
   }, [setNodes]);
 
   const nodeTypes = useMemo(() => ({
-    stateNode: (props) => <StateNode {...props} onInputChange={onInputChange} onFileChange={onFileChange1}/>,
+    stateNode: (props) => <StateNode {...props} onInputChange={onInputChange} onFileChange={onFileChange1} />,
     disableStateNode: DisableStateNode,
-      customNode : (props) => <FileSelectorNode {...props} onFileSelect={onFileChange1}/>,
+    customNode: (props) => <FileSelectorNode {...props} onFileSelect={onFileChange1} />,
     // ... other node types ...
   }), [onInputChange]); // Include all dependencies here
 
@@ -80,7 +86,7 @@ const Home = () => {
     try {
       // Log the nodes data for debugging
       console.log("Nodes Data:", nodes);
-      const response = await fetch(server_address+'save_state_flow/hello', {
+      const response = await fetch(server_address + 'save_state_flow/hello', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +102,7 @@ const Home = () => {
   };
   const handleDownload = async () => {
     try {
-      const response = await axios.get(server_address+'download-bot-json', {
+      const response = await axios.get(server_address + 'download-bot-json', {
         responseType: 'blob', // Set the response type to blob
       });
 
@@ -116,32 +122,32 @@ const Home = () => {
     } catch (error) {
       console.error('Error downloading JSON file:', error);
     }
-  }; 
-const fetchFlowFromServer = async () => {
-  try {
-    const response = await fetch(server_address+'get_state_flow/hello');
-    const data = await response.json();
-    if (data.nodes && Array.isArray(data.nodes) && data.edges && Array.isArray(data.edges)) {
-      const updatedNodes = data.nodes.map(node => {
-        let nodeData = node.data || {};
-        return {
-          ...node,
-          data: nodeData
-        };
-      });
-      setNodes(updatedNodes);
-      setEdges(data.edges);
-      setStateNodeAdded(data.nodes.some(node => node.type === 'stateNode'));
-    } else {
-      console.error("Invalid data structure received from server");
+  };
+  const fetchFlowFromServer = async () => {
+    try {
+      const response = await fetch(server_address + 'get_state_flow/hello');
+      const data = await response.json();
+      if (data.nodes && Array.isArray(data.nodes) && data.edges && Array.isArray(data.edges)) {
+        const updatedNodes = data.nodes.map(node => {
+          let nodeData = node.data || {};
+          return {
+            ...node,
+            data: nodeData
+          };
+        });
+        setNodes(updatedNodes);
+        setEdges(data.edges);
+        setStateNodeAdded(data.nodes.some(node => node.type === 'stateNode'));
+      } else {
+        console.error("Invalid data structure received from server");
+      }
+    } catch (error) {
+      console.error('Error fetching flow:', error);
     }
-  } catch (error) {
-    console.error('Error fetching flow:', error);
-  }
-};
+  };
 
   useEffect(() => {
-    fetchFlowFromServer();  
+    fetchFlowFromServer();
   }, []);
 
   // Function to handle label change
@@ -170,7 +176,7 @@ const fetchFlowFromServer = async () => {
     setSelectedNode(null);
   }, [selectedNode, tempLabel, setNodes]);
 
-  
+
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
@@ -181,7 +187,7 @@ const fetchFlowFromServer = async () => {
   }, []);
 
   const handle_counter = (counter) => {
-      setCounterNode(counter+1);
+    setCounterNode(counter + 1);
   };
 
   // Add this use effect
@@ -193,21 +199,19 @@ const fetchFlowFromServer = async () => {
       event.preventDefault();
       const type = event.dataTransfer.getData('application/reactflow');
       const isSidebarNode = event.dataTransfer.getData('sidebarNode'); // New line
-      const isBottombarNode = event.dataTransfer.getData('bottomBarNode'); 
+      const isBottombarNode = event.dataTransfer.getData('bottomBarNode');
       const className = isSidebarNode ? '' : (isBottombarNode ? 'bottombarnode' : '');
-      let selectedNodeType = isSidebarNode ? 'customNode' :(isBottombarNode ? type : 'stateNode');
+      let selectedNodeType = isSidebarNode ? 'customNode' : (isBottombarNode ? type : 'stateNode');
 
-      if(isStateNodeAdded == true)
-      {
+      if (isStateNodeAdded == true) {
         counter = counter + 2;
       }
-      if(selectedNodeType == 'stateNode') 
-      {
-          counter = counter+1;
+      if (selectedNodeType == 'stateNode') {
+        counter = counter + 1;
       }
       // console.log('After',counter);
-      
-      if(counter > 1 && selectedNodeType == 'stateNode') // add this logic here
+
+      if (counter > 1 && selectedNodeType == 'stateNode') // add this logic here
       {
         selectedNodeType = 'disableStateNode';
       }
@@ -223,14 +227,14 @@ const fetchFlowFromServer = async () => {
       });
       const newNode = {
         id: getId(),
-        type: selectedNodeType ,
+        type: selectedNodeType,
         position,
         data: { label: `${type} ` },
         className: className
       };
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance, setNodes,isStateNodeAdded] // a change isStateNodeAdded to be added Here (ALI)
+    [reactFlowInstance, setNodes, isStateNodeAdded] // a change isStateNodeAdded to be added Here (ALI)
   );
 
   const onNodeSelect = useCallback((event, node) => {
@@ -242,41 +246,55 @@ const fetchFlowFromServer = async () => {
       setNodes((nds) => nds.filter((n) => n.id !== selectedNode.id));
       setSelectedNode(null);
     }
-  }, [selectedNode, setNodes]);
+    if (selectedEdge) {
+      setEdges((eds) => eds.filter((e) => e.id !== selectedEdge.id));
+      setSelectedEdge(null);
+    }
+  }, [selectedNode, setNodes, selectedEdge, setEdges]);
 
   const onEdgeSelect = useCallback((event, edge) => {
     setSelectedEdge(edge);
   }, []);
 
-  const onDeleteEdge = useCallback(() => {
-    if (selectedEdge) {
-      setEdges((eds) => eds.filter((e) => e.id !== selectedEdge.id));
-      setSelectedEdge(null);
-    }
-  }, [selectedEdge, setEdges]);
+  // const onDeleteEdge = useCallback(() => {
+  //   if (selectedEdge) {
+  //     setEdges((eds) => eds.filter((e) => e.id !== selectedEdge.id));
+  //     setSelectedEdge(null);
+  //   }
+  // }, [selectedEdge, setEdges]);
 
   return (
     <>
       <div className="dndflow">
-      <div>
-        <LeftSidebar/>
-        
-        <div className='button-out'>
-          
-            <button className="bottom-button"><NavLink className="nav-link" to="/">Home Node </NavLink></button>
-          
-        
-          <button onClick={saveFlowToServer} className="bottom-button">
-              Save Flow
-          </button>
-          <button onClick={handleDownload} className="bottom-button">
-              EXPORT JSON
-          </button>
+
+        <div>
+          <LeftSidebar />
+
+          <div className='button-out'>
+            <div className='icon-out'>
+       
+            <button className="bottom-button"><NavLink className="nav-link" to="/">
+          <HomeIcon/>
+               </NavLink></button>
+            <button onClick={saveFlowToServer} className="bottom-button">
+              <SaveIcon/>
+            </button>
+            <button onClick={handleDownload} className="bottom-button">
+            <SimCardDownloadIcon/>
+            </button>
+            <button onClick={onDelete} className="bottom-button">
+              <DeleteIcon/>
+            </button>
+
+            </div>
+          </div>
+
         </div>
-      </div>
+
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
+           
               nodes={nodes}
               edges={edges}
               onNodesChange={onNodesChange}
@@ -289,19 +307,21 @@ const fetchFlowFromServer = async () => {
               onEdgeClick={onEdgeSelect} // Handle edge selection
               onNodeDoubleClick={onNodeDoubleClick}
               fitView
-              nodeTypes={nodeTypes}          
+              nodeTypes={nodeTypes}
             >
+               <MiniMap  nodeStrokeWidth={3} />
               <Controls />
               <Background variant="dots" gap={12} size={1} />
             </ReactFlow>
           </div>
-          <div className='sidebar-out'>
+
+          <div >
             <Sidebar />
-            <div className='button-out'>
-            <button onClick={onDelete} className="bottom-button">Delete Node</button>
-            <button onClick={onDeleteEdge} className="bottom-button">Delete Edge</button>
-            </div>
+
+            
+
           </div>
+
         </ReactFlowProvider>
       </div>
 
@@ -310,17 +330,20 @@ const fetchFlowFromServer = async () => {
           <input className='input-lable' value={tempLabel} onChange={handleLabelChange} />
           <button className='update-button' onClick={updateNodeLabel}>Update Label</button>
         </div>
-      : 
-      <div className="edit-label-modal">
-        <p className='pra'>
-          Double Click Node To Update!
-        </p>
-        </div>
+        :
+        <></>
+        // <div className="edit-label-modal">
+        //   <p className='pra'>
+        //     Double Click Node To Update!
+        //   </p>
+        // </div>
       }
 
       <div className='bottom-bar'>
-        <BottomBar/>
+        <BottomBar />
       </div>
+      {/* <AddBottomPart/> */}
+      
     </>
   );
 };

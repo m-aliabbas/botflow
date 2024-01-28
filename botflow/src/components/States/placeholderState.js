@@ -6,8 +6,12 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   Controls,
-  internalsSymbol,
+  MiniMap 
 } from 'reactflow';
+import HomeIcon from '@mui/icons-material/Home';
+import SaveIcon from '@mui/icons-material/Save';
+import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
+import DeleteIcon from '@mui/icons-material/Delete';
 import 'reactflow/dist/style.css';
 import Sidebar from '../sidebar';
 import LeftSidebar from '../leftSidebar';
@@ -256,18 +260,16 @@ const PlaceHolderState = () => {
           setNodes((nds) => nds.filter((n) => n.id !== selectedNode.id));
           setSelectedNode(null);
         }
-      }, [selectedNode, setNodes]);
-    
-      const onEdgeSelect = useCallback((event, edge) => {
-        setSelectedEdge(edge);
-      }, []);
-    
-      const onDeleteEdge = useCallback(() => {
         if (selectedEdge) {
           setEdges((eds) => eds.filter((e) => e.id !== selectedEdge.id));
           setSelectedEdge(null);
         }
-      }, [selectedEdge, setEdges]);
+      }, [selectedNode, setNodes,selectedEdge, setEdges]);
+    
+      const onEdgeSelect = useCallback((event, edge) => {
+        setSelectedEdge(edge);
+      }, []);
+
     
 
   return (
@@ -277,17 +279,25 @@ const PlaceHolderState = () => {
         <LeftSidebar/>
         
         <div className='button-out'>
-          
-            <button className="bottom-button"><NavLink className="nav-link" to="/">Home Node </NavLink></button>
-          
-        
-          <button onClick={saveFlowToServer} className="bottom-button">
-              Save Flow
-          </button>
-          <button onClick={handleDownload} className="bottom-button">
-              EXPORT JSON
-          </button>
-        </div>
+            <div className='icon-out'>
+       
+            <button className="bottom-button"><NavLink className="nav-link" to="/">
+          <HomeIcon/>
+               </NavLink></button>
+            <button onClick={saveFlowToServer} className="bottom-button">
+              <SaveIcon/>
+            </button>
+            <button onClick={handleDownload} className="bottom-button">
+            <SimCardDownloadIcon/>
+            </button>
+            <button onClick={onDelete} className="bottom-button">
+              <DeleteIcon/>
+            </button>
+
+            </div>
+          </div>
+
+
       </div>
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
@@ -306,16 +316,17 @@ const PlaceHolderState = () => {
               fitView
               nodeTypes={nodeTypes}          
             >
+              <MiniMap  nodeStrokeWidth={3} />
               <Controls />
               <Background variant="dots" gap={12} size={1} />
             </ReactFlow>
           </div>
           <div className='sidebar-out'>
             <Sidebar />
-            <div className='button-out'>
+            {/* <div className='button-out'>
             <button onClick={onDelete} className="bottom-button">Delete Node</button>
             <button onClick={onDeleteEdge} className="bottom-button">Delete Edge</button>
-            </div>
+            </div> */}
           </div>
         </ReactFlowProvider>
       </div>
@@ -326,11 +337,12 @@ const PlaceHolderState = () => {
           <button className='update-button' onClick={updateNodeLabel}>Update Label</button>
         </div>
       : 
-      <div className="edit-label-modal">
-        <p className='pra'>
-          Double Click Node To Update!
-        </p>
-        </div>
+      <></>
+      // <div className="edit-label-modal">
+      //   <p className='pra'>
+      //     Double Click Node To Update!
+      //   </p>
+      //   </div>
       }
 
       <div className='bottom-bar'>

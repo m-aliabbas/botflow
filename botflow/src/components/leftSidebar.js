@@ -1,9 +1,9 @@
-import React, { useState, useEffect} from 'react';
-
+import React, { useState, useEffect } from 'react';
+import AddIcon from '@mui/icons-material/Add';
 import Button, { ButtonProps } from '@mui/material/Button';
-import { Modal, Box, TextField,IconButton } from '@mui/material';
+import { Modal, Box, TextField, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
+const { server_address } = require('./config');
 const style = {
   position: 'absolute',
   top: '50%',
@@ -20,9 +20,9 @@ export default () => {
     event.dataTransfer.setData('sidebarNode', true); // Add this line
     event.dataTransfer.effectAllowed = 'move';
   };
-
+  const [refreshKey, setRefreshKey] = useState(0);
   const [open, setOpen] = useState(false);
-  const [text,setText] = useState('');
+  const [text, setText] = useState('');
   const [classNames, setClassNames] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -30,7 +30,7 @@ export default () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/save-pred_classes/', {
+      const response = await fetch(server_address + 'save-pred_classes/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,11 +45,13 @@ export default () => {
     } catch (error) {
       console.error('Error:', error);
     }
+    setRefreshKey((oldKey) => oldKey + 1);
+    setText("");
     handleClose();
   };
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:8000/get-pred_classes/');
+      const response = await fetch(server_address + 'get-pred_classes/');
       if (response.ok) {
         const data = await response.json();
         setClassNames(data); // Update the state with the data
@@ -62,64 +64,82 @@ export default () => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [refreshKey]);
 
- 
+
   return (
     <aside>
-      <div className="description">Class</div>
-      <div>
-      <Button variant="contained" onClick={handleOpen}>
-        Add Class
-      </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style} component="form" onSubmit={handleSubmit}>
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
+      <div className='leftsidebar'>
+        <div>
+
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style} component="form" onSubmit={handleSubmit}>
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+              <TextField
+                label=" Enter Class Name"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <Button type="submit" variant="contained" style={{background:"black"}}>
+                Add CLASS
+              </Button>
+            </Box>
+          </Modal>
+        </div>
+
+
+        <div className="sidebarnode">
+          <div className="description">CLASSES
+            <div
+              onClick={handleOpen}
+            >
+              <AddIcon className='bottom-add-icon' />
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)', // Two columns
+              gap: '1px', // Space between items
             }}
           >
-            <CloseIcon />
-          </IconButton>
-          <TextField
-            label="Class Name"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-          <Button type="submit" variant="contained">
-            Submit
-          </Button>
-        </Box>
-      </Modal>
-    </div>
-
-      <div className="left-out">
-      <div className="flex-container">
-        {classNames.map((className, index) => (
-          <div
-            className="sidebarnode"
-            onDragStart={(event) => onDragStart(event, className.class_name)}
-            draggable
-            key={index}
-          >
-            <Button variant="contained" className='leftsidebar-node'>
-              {className.class_name}
-            </Button>
+            {classNames.map((className, index) => (
+              <div
+                className='leftsidebar-node-d'
+                onDragStart={(event) => onDragStart(event, className.class_name)}
+                draggable
+                key={index}
+                style={{ /* Add any additional inline styles for nodes here */ }}
+              >
+                <Button variant="contained" className='leftsidebar-node'>
+                  {className.class_name}
+                </Button>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+
+
+        </div>
+
       </div>
     </aside>
   );
