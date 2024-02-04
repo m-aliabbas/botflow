@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { useState, useEffect} from 'react';
 import { Modal, Box, TextField,IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { Select, MenuItem } from '@mui/material';
 const { server_address} = require('./config');
 const style = {
   position: 'absolute',
@@ -29,29 +30,43 @@ export default () => {
   const [refreshKey, setRefreshKey] = useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [selectedState, setSelectedState] = useState('');
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(server_address+'save-state/', {
+      // Include the selectedState in the body of the request
+      const payload = {
+        text: text,
+        selectedState: selectedState, // This is the new part
+      };
+      console.log(payload);
+      const response = await fetch(server_address + 'save-state/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify(payload),
       });
+  
       if (response.ok) {
-        console.log('Text saved successfully');
+        console.log('Text and state saved successfully');
+        // Additional success handling here, if necessary
       } else {
-        console.error('Failed to save text');
+        console.error('Failed to save text and state');
+        // Additional error handling here, if necessary
       }
     } catch (error) {
       console.error('Error:', error);
+      // Additional error handling here, if necessary
     }
-    setRefreshKey((oldKey) => oldKey + 1);
+    // Reset form and close modal after submission
     setText("");
+    setSelectedState(""); // Optionally reset selected state to "None"
     handleClose();
   };
+  
 
   const fetchData = async () => {
     try {
@@ -104,6 +119,27 @@ export default () => {
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
+  <label>
+    Select Class To be Copied
+  </label>
+<Select
+      labelId="state-select-label"
+      id="state-select"
+      value={selectedState}
+      onChange={(e) => setSelectedState(e.target.value)}
+      fullWidth
+      displayEmpty
+      sx={{ my: 2 }} // Adjust spacing as needed
+    >
+      <MenuItem value="">
+        <em>None</em>
+      </MenuItem>
+      {classNames.map((className) => (
+        <MenuItem key={className.class_name} value={className.class_name}>
+          {className.class_name}
+        </MenuItem>
+      ))}
+    </Select>
           <Button type="submit" variant="contained" style={{background:"black"}}>
             Add State
           </Button>

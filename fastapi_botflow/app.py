@@ -61,6 +61,11 @@ class Flow(BaseModel):
 class ClassItem(BaseModel):
     text: str
 
+
+class StateNode(BaseModel):
+    text: str
+    selectedState: str
+
 def get_states_name():
     collection = db['states_collection']
     documents = list(collection.find({}, {'link': 1}))
@@ -164,6 +169,23 @@ async def get_stat_flow(state:str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+def get_stat_flow_1(state:str):
+    collection = db['states_collection']
+    try:
+        filter = {'link':state}
+        result = collection.find_one(filter=filter)
+        if result:
+            # Convert ObjectId to string (or you can simply not include it in the response)
+            result['_id'] = str(result['_id'])
+            temp1 = result.pop('_id', None) 
+            print(temp1)
+        
+        return result if result else {'edges':[],'nodes':[]}
+        # return result if result else {}
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail=str(e))
+    
 @app.post("/save-pred_classes/")
 async def save_text(item: ClassItem):
     try:
@@ -208,17 +230,29 @@ async def get_disposition():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-
+def update_node_data(nodes,label):
+    nodes[1]['data']['label'] = label
+    return nodes
 @app.post("/save-state/")
-async def save_state(item: ClassItem):
+async def save_state(item: StateNode):
     try:
+        # print(item)
         collection = db.states_collection
-
+        print(item.selectedState)
+        data_ret = get_stat_flow_1(lower_and_replace_spaces(item.selectedState))
+        print(data_ret)
+        edges = data_ret.get('edges',[])
+        nodes = data_ret.get('nodes',[])
+        if len(nodes) > 2:
+            nodes = update_node_data(nodes=nodes,label=item.text)
         # Inserting the item into the collection
-        data = {"class_name": item.text,'link':lower_and_replace_spaces(item.text)}
+        data = {"class_name": item.text,'link':lower_and_replace_spaces(item.text),
+                "edges":edges,"nodes":nodes,
+                }
         collection.insert_one(data)
         return {"success": True}
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail=str(e))
     
 
