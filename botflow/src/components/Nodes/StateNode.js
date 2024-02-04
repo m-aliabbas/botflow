@@ -3,12 +3,12 @@ import { Handle, Position } from 'reactflow';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileChange,onCheckChange}) {
+function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileChange,onCheckChange,onQqCheckChange}) {
   const [inputValue, setInputValue] = useState('');
   const [fileName, setFileName] = useState('');
   const [checked, setChecked] = useState(false);
-
-  // console.log("checkbox",checked)
+  const [qqChecked, setQqChecked] = useState(false);
+  // console.log("qqcheckbox",qqChecked)
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -27,7 +27,14 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
     }
   };
   
-
+  const handleQqCheckChange = (event) => {
+    const newQqChecked = event.target.checked;
+    setQqChecked(newQqChecked); // This updates the local state
+    if (onQqCheckChange) {
+      onQqCheckChange(id, newQqChecked); // Make sure this is being called
+    }
+  };
+  
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setFileName(file);
@@ -45,6 +52,7 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
           inputValue,
           fileName,
           checked,
+          qqChecked
         };
         console.log(dataToSend)
         onSendData(id, dataToSend);
@@ -52,9 +60,10 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
     };
 
     sendData();
-  }, [id, inputValue, fileName,checked, onSendData]);
+  }, [id, inputValue, fileName,checked,qqChecked, onSendData]);
   // console.log('checked_status','input value',checked,inputValue);
   const checkBoxId = `state-check-input-${id}`;
+  const qqCheckBoxId = `state-qq-check-input-${id}`;
   const fileInputId = `state-file-input-${id}`;
   const numberInputId = `number-input-${id}`;
   return (
@@ -68,6 +77,17 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
   type="checkbox"
   checked={checked}
   onChange={handleCheckChange} // Make sure this matches your method name
+  className='checkbox-div'
+/>
+
+</div>
+
+<div className='checkbox-out'><p style={{fontSize:"6pt"}}>QQ State</p>
+<input
+  id="customCheckbox1"
+  type="checkbox"
+  checked={qqChecked}
+  onChange={handleQqCheckChange} // Make sure this matches your method name
   className='checkbox-div'
 />
 

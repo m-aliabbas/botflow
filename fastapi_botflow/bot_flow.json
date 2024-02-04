@@ -1,17 +1,236 @@
 {
-    "S_Hello ": {
-        "sec": "99",
-        "fileName": "botflow(4).json",
-        "reb_state": true
+    "S_HELLO ": {
+        "sec": "5",
+        "fileName": "hello.wav",
+        "reb_state": false,
+        "qq_state": false,
+        "answering_machine ": {
+            "fileName": "",
+            "next_state": "disp_A "
+        },
+        "DNC ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "NotSpoke ": {
+            "fileName": "are_you_there.wav",
+            "next_state": "S_HELLO "
+        },
+        "None ": {
+            "fileName": "",
+            "next_state": "S_INTRO "
+        }
     },
-    "S_intro ": {
-        "sec": "32115",
-        "fileName": "",
-        "reb_state": false
+    "S_INTRO ": {
+        "sec": "5",
+        "fileName": "intro.wav",
+        "reb_state": false,
+        "qq_state": false,
+        "DNC ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "answering_machine ": {
+            "fileName": "",
+            "next_state": "disp_A "
+        },
+        "GreetBack ": {
+            "fileName": "doing_good.wav",
+            "next_state": "S_PITCH "
+        },
+        "greetings ": {
+            "fileName": "",
+            "next_state": "S_PITCH "
+        },
+        "None ": {
+            "fileName": "",
+            "next_state": "S_PITCH "
+        },
+        "calling_about ": {
+            "fileName": "",
+            "next_state": "S_PITCH "
+        },
+        "whom_calling ": {
+            "fileName": "",
+            "next_state": "S_PITCH "
+        },
+        "NotSpoke ": {
+            "fileName": "are_you_there.wav",
+            "next_state": "S_INTRO "
+        },
+        "BUSY ": {
+            "fileName": "",
+            "next_state": "S_BUSY "
+        }
     },
     "S_PITCH ": {
-        "sec": "121",
-        "fileName": "botflow(5).json",
-        "reb_state": false
+        "sec": "5",
+        "fileName": "pitch.wav",
+        "reb_state": false,
+        "qq_state": true,
+        "scam ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "abusive ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "DNC ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "answering_machine ": {
+            "fileName": "",
+            "next_state": "disp_A "
+        },
+        "BUSY ": {
+            "fileName": "",
+            "next_state": "S_BUSY "
+        },
+        "Not_Interested ": {
+            "fileName": "",
+            "next_state": "S_NI "
+        },
+        "already ": {
+            "fileName": "",
+            "next_state": "S_ALREADY "
+        },
+        "provide_company ": {
+            "fileName": "alright.wav",
+            "next_state": "S_PRICE_QUESTION "
+        },
+        "calling_about ": {
+            "fileName": "",
+            "next_state": "S_WHY "
+        },
+        "NotSpoke ": {
+            "fileName": "",
+            "next_state": "S_ARE_YOU_THERE "
+        },
+        "provide_price ": {
+            "fileName": "",
+            "next_state": "S_PRICES "
+        },
+        "having_contract ": {
+            "fileName": "",
+            "next_state": "S_CONTRACT "
+        }
+    },
+    "S_TRANSFER ": {
+        "sec": "4",
+        "fileName": "transfer_consent.wav",
+        "reb_state": false,
+        "qq_state": false,
+        "NotSpoke ": {
+            "fileName": "",
+            "next_state": "disp_XFER "
+        },
+        "None ": {
+            "fileName": "",
+            "next_state": "disp_XFER "
+        },
+        "affirmation ": {
+            "fileName": "",
+            "next_state": "disp_XFER "
+        },
+        "Not_Interested ": {
+            "fileName": "",
+            "next_state": "disp_NI "
+        },
+        "decline ": {
+            "fileName": "",
+            "next_state": "disp_NI "
+        },
+        "scam ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "DNC ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "abusive ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "answering_machine ": {
+            "fileName": "",
+            "next_state": "disp_A "
+        },
+        "BUSY ": {
+            "fileName": "",
+            "next_state": "disp_B "
+        }
+    },
+    "S_BUSY ": {
+        "sec": "5",
+        "fileName": "",
+        "reb_state": true,
+        "qq_state": false,
+        "abusive ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "DNC ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "scam ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "decline ": {
+            "fileName": "",
+            "next_state": "disp_B "
+        },
+        "BUSY ": {
+            "fileName": "",
+            "next_state": "disp_B "
+        },
+        "answering_machine ": {
+            "fileName": "",
+            "next_state": "disp_A "
+        },
+        "Not_Interested ": {
+            "fileName": "",
+            "next_state": "S_NI "
+        },
+        "ask_prices ": {
+            "fileName": "",
+            "next_state": "S_PRICES "
+        },
+        "affirmation ": {
+            "fileName": "",
+            "next_state": "S_PREV_STATE "
+        },
+        "NotSpoke ": {
+            "fileName": "",
+            "next_state": "S_PREV_STATE "
+        },
+        "None ": {
+            "fileName": "",
+            "next_state": "S_PREV_STATE "
+        },
+        "already ": {
+            "fileName": "",
+            "next_state": "S_ALREADY "
+        }
+    },
+    "S_NI ": {
+        "sec": "5",
+        "fileName": "",
+        "reb_state": true,
+        "qq_state": false
+    },
+    "S_ALREADY ": {
+        "sec": "5",
+        "fileName": "",
+        "reb_state": true,
+        "qq_state": true,
+        "greetings ": {
+            "fileName": "",
+            "next_state": "disp_A "
+        }
     }
 }

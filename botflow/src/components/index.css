@@ -555,11 +555,11 @@ aside .leftsidebar{
  }
 
  .state-node .react-flow__handle-bottom {
-   bottom: -56px !important;
+   bottom: -66px !important;
  }
 
  .state-node .react-flow__handle-top {
-   top: -56px !important;
+   top: -66px !important;
  }
 
  .react-flow .react-flow__handle-top {
@@ -580,7 +580,7 @@ aside .leftsidebar{
 
  .state-node {
    width: 400PX !important;
-   height: 120px;
+   height: 140px;
    overflow: hidden !important;
    border: 2px solid #053c5e;
    background-color: #053c5e23 !important;
