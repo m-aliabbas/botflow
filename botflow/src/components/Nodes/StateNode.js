@@ -3,9 +3,12 @@ import { Handle, Position } from 'reactflow';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileChange}) {
+function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileChange,onCheckChange}) {
   const [inputValue, setInputValue] = useState('');
   const [fileName, setFileName] = useState('');
+  const [checked, setChecked] = useState(false);
+
+  // console.log("checkbox",checked)
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -14,6 +17,16 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
       onInputChange(id, newValue);
     }
   };
+  // Inside StateNode component
+
+  const handleCheckChange = (event) => {
+    const newChecked = event.target.checked;
+    setChecked(newChecked); // This updates the local state
+    if (onCheckChange) {
+      onCheckChange(id, newChecked); // Make sure this is being called
+    }
+  };
+  
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -25,21 +38,23 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
   // Use useEffect to send data whenever inputValue or fileName changes
   useEffect(() => {
     const sendData = async () => {
+      console.log('Send Data B')
       // Check if both inputValue and fileName have values
       if (typeof onSendData === 'function' && inputValue && fileName) {
         const dataToSend = {
           inputValue,
           fileName,
+          checked,
         };
+        console.log(dataToSend)
         onSendData(id, dataToSend);
       }
     };
 
     sendData();
-  }, [id, inputValue, fileName, onSendData]);
-  // console.log("agia daata yaha bhi,", inputValue)
-  // console.log("agia daata yaha bhi,", fileName)
-//   const id = (Math.random() + 1).toString(36).substring(7);
+  }, [id, inputValue, fileName,checked, onSendData]);
+  // console.log('checked_status','input value',checked,inputValue);
+  const checkBoxId = `state-check-input-${id}`;
   const fileInputId = `state-file-input-${id}`;
   const numberInputId = `number-input-${id}`;
   return (
@@ -47,6 +62,17 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
       <Handle type="target" position={Position.Top} isConnectable={isConnectable} />
       <div>
       <label htmlFor="file-input-state-node" className="file-input-label">{data.label}</label>
+<div className='checkbox-out'><p style={{fontSize:"6pt"}}>Rebuttal State</p>
+<input
+  id="customCheckbox"
+  type="checkbox"
+  checked={checked}
+  onChange={handleCheckChange} // Make sure this matches your method name
+  className='checkbox-div'
+/>
+
+</div>
+
         <label htmlFor="number-input" className='numbers'>Listening seconds</label>
         <input 
         className='input-numbers'

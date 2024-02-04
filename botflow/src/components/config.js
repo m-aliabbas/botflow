@@ -1,2 +1,2 @@
-const server_address = "http://113.203.209.145:9005/";
+const server_address = "http://127.0.0.1:8000/";
 module.exports = { server_address };

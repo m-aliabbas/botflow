@@ -76,13 +76,22 @@ const PlaceHolderState = () => {
           )
         );
       }, [setNodes]);
-    
+      
+      const onCheckChange = useCallback((nodeId, newChecked) => {
+        console.log(`Updating node ${nodeId} with checked: ${newChecked}`);
+        setNodes((prevNodes) =>
+          prevNodes.map((node) =>
+            node.id === nodeId ? { ...node, data: { ...node.data, checked: newChecked } } : node
+          )
+        );
+        
+      }, [setNodes]);
       const nodeTypes = useMemo(() => ({
-        stateNode: (props) => <StateNode {...props} onInputChange={onInputChange} onFileChange={onFileChange1}/>,
+        stateNode: (props) => <StateNode {...props} onInputChange={onInputChange} onFileChange={onFileChange1} onCheckChange={onCheckChange}/>,
         disableStateNode: DisableStateNode,
           customNode : (props) => <FileSelectorNode {...props} onFileSelect={onFileChange1}/>,
         // ... other node types ...
-      }), [onInputChange]); // Include all dependencies here
+      }), [onInputChange, onFileChange, onCheckChange]); // Include all dependencies here
 
       const saveFlowToServer = async () => {
         try {

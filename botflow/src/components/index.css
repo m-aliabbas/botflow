@@ -1,5 +1,18 @@
- 
-
+ .checkbox-out{
+/* background-color: #0d00ff; */
+display: flex;
+justify-content: center;
+text-align: center;
+align-items: center;
+padding: 0px !important;
+margin: 0px !important;
+height: 15px;
+ }
+ .checkbox-div{
+  border: none !important;
+  outline: none !important;
+  height: 10px;
+ }
  
  .dndflow {
    flex-direction: column;
@@ -628,7 +641,7 @@ aside .leftsidebar{
 
  .numbers {
    font-size: 5pt !important;
-   margin-top: 10px;
+   margin-top: 5px;
  }
 
  .input-numbers {

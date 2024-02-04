@@ -11,7 +11,7 @@ class GetCustomJson:
 
         # temp_dict[main_key]['fileName'] = state_nodes['data']['fileName']
         temp_dict[main_key]['fileName'] = state_nodes['data'].get('fileName', '') # updated ny danish
-
+        temp_dict[main_key]['reb_state'] = state_nodes['data'].get('checked',False)
         return temp_dict
 
     def find_state_nodes(self,data):

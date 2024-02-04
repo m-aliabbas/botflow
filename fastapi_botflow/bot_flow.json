@@ -1,26 +1,17 @@
 {
     "S_Hello ": {
-        "sec": "5",
-        "fileName": "",
-        "dnc ": {
-            "fileName": "",
-            "next_state": "disp_A "
-        },
-        "answering_machine ": {
-            "fileName": "",
-            "next_state": "disp_A "
-        }
+        "sec": "99",
+        "fileName": "botflow(4).json",
+        "reb_state": true
     },
-    "S_Intro ": {
-        "sec": "5",
+    "S_intro ": {
+        "sec": "32115",
         "fileName": "",
-        "None ": {
-            "fileName": "",
-            "next_state": "disp_XFER "
-        },
-        "dnc ": {
-            "fileName": "",
-            "next_state": "S_PITCH "
-        }
+        "reb_state": false
+    },
+    "S_PITCH ": {
+        "sec": "121",
+        "fileName": "botflow(5).json",
+        "reb_state": false
     }
 }
