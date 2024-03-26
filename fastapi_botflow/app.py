@@ -243,8 +243,8 @@ async def save_state(item: StateNode):
         print(data_ret)
         edges = data_ret.get('edges',[])
         nodes = data_ret.get('nodes',[])
-        if len(nodes) > 2:
-            nodes = update_node_data(nodes=nodes,label=item.text)
+        # if len(nodes) > 2:
+        #     nodes = update_node_data(nodes=nodes,label=item.text)
         # Inserting the item into the collection
         data = {"class_name": item.text,'link':lower_and_replace_spaces(item.text),
                 "edges":edges,"nodes":nodes,

@@ -75,7 +75,8 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
 <input
   id="customCheckbox"
   type="checkbox"
-  checked={checked}
+  // checked={checked}
+  checked={data.checked}
   onChange={handleCheckChange} // Make sure this matches your method name
   className='checkbox-div'
 />
@@ -86,7 +87,8 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
 <input
   id="customCheckbox1"
   type="checkbox"
-  checked={qqChecked}
+  // checked={qqChecked}
+  checked={data.qqChecked}
   onChange={handleQqCheckChange} // Make sure this matches your method name
   className='checkbox-div'
 />
@@ -96,7 +98,8 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
         <label htmlFor="number-input" className='numbers'>Listening seconds</label>
         <input 
         className='input-numbers'
-        value={inputValue}
+        // value={inputValue}
+        value={data.inputValue}
         onChange={handleChange}
           type="number"
           id={numberInputId}
@@ -125,7 +128,7 @@ function StateNode ({ id, onSendData, data, isConnectable,onInputChange,onFileCh
         <Button  className="file-select-button" onClick={() => document.getElementById(fileInputId).click()} variant="contained" startIcon={<CloudUploadIcon />}>
       Upload file 
     </Button>
-        {fileName && <div className="file-name-display">{fileName.name}</div>}
+      <div className="file-name-display">{data.fileName}</div>
         {/* {selectedFile && <div className="file-name-display">{selectedFile.name}</div>} */}
 
       </div>

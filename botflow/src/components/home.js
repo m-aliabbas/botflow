@@ -333,7 +333,7 @@ const Home = () => {
               fitView
               nodeTypes={nodeTypes}
             >
-               <MiniMap  nodeStrokeWidth={3} />
+               {/* <MiniMap  nodeStrokeWidth={3} /> */}
               <Controls />
               <Background variant="dots" gap={12} size={1} />
             </ReactFlow>
@@ -349,6 +349,7 @@ const Home = () => {
         </ReactFlowProvider>
       </div>
 
+      <div className='bottom-bar'>
       {isEditing ?
         <div className="edit-label-modal">
           <input className='input-lable' value={tempLabel} onChange={handleLabelChange} />
@@ -363,7 +364,6 @@ const Home = () => {
         // </div>
       }
 
-      <div className='bottom-bar'>
         <BottomBar />
       </div>
       {/* <AddBottomPart/> */}

@@ -39,7 +39,7 @@ function FileSelectorNode({ id, data, isConnectable, onFileSelect }) {
                     startIcon={<CloudUploadIcon />}>
                     Upload file
                 </Button>
-                {fileName && <div className="file-name-display">{fileName}</div>}
+     <div className="file-name-display">{data.fileName}</div>
             </div>
             <Handle type="source" position={Position.Bottom} id="b" isConnectable={isConnectable} />
         </div>

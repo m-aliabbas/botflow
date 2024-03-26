@@ -132,29 +132,31 @@ const PlaceHolderState = () => {
     
           // Create a blob from the response data
           const blob = new Blob([response.data], { type: 'application/json' });
-    
+          
           // Create a link element to trigger the download
           const link = document.createElement('a');
           link.href = window.URL.createObjectURL(blob);
           link.download = 'botflow.json';
-    
+          
           // Trigger the download
           link.click();
-    
+          
           // Cleanup: remove the link element
           link.remove();
         } catch (error) {
           console.error('Error downloading JSON file:', error);
         }
       }; 
-    const fetchFlowFromServer = async () => {
-      try {
-        const response = await fetch(server_address+'get_state_flow/' + item,);
-        const data = await response.json();
+      const fetchFlowFromServer = async () => {
+        try {
+          const response = await fetch(server_address+'get_state_flow/' + item,);
+        
+          const data = await response.json();
         
         if (data.nodes && Array.isArray(data.nodes) && data.edges && Array.isArray(data.edges)) {
           const updatedNodes = data.nodes.map(node => {
             let nodeData = node.data || {};
+            console.log("YA HAI NODE DATA",nodeData)
             return {
               ...node,
               data: nodeData
@@ -229,6 +231,7 @@ const PlaceHolderState = () => {
         console.log('isStateNodeAdded changed:', isStateNodeAdded);
       }, [isStateNodeAdded]);
       const onDrop = useCallback(
+      
         (event) => {
           event.preventDefault();
           const type = event.dataTransfer.getData('application/reactflow');
@@ -338,7 +341,7 @@ const PlaceHolderState = () => {
               fitView
               nodeTypes={nodeTypes}          
             >
-              <MiniMap  nodeStrokeWidth={3} />
+              {/* <MiniMap  nodeStrokeWidth={3} /> */}
               <Controls />
               <Background variant="dots" gap={12} size={1} />
             </ReactFlow>

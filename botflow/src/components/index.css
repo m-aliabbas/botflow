@@ -18,8 +18,8 @@ height: 15px;
    flex-direction: column;
    display: flex;
    flex-grow: 1;
-   height: 80%;
-   /* height:80vh; */
+   /* height: 80%; */
+   height:90vh;
    /* background-color: #0d00ff; */
  }
 
@@ -85,8 +85,9 @@ aside .right-sidebar{
   border-left: 1px solid rgb(184, 184, 184);
   /* font-size: 12px; */
   background: #ffffff;
-  min-height: 450px;
-  max-height: 450px !important;
+  min-height: 100% !important;
+  height: 85vh !important;
+ 
   overflow-y: scroll;
 
 }
@@ -97,8 +98,8 @@ aside .leftsidebar{
   width: 230px !important;
   /* font-size: 12px; */
   background: #ffffff;
-  min-height: 400px !important;
-  max-height: 400px !important;
+
+  height: 74vh !important;
   overflow-y: scroll;
 }
 
@@ -236,6 +237,9 @@ aside .right-sidebar{
   font-size: 12px;
   background: #ffffff;
 
+  height: 84vh !important;
+ 
+
 }
 
 aside .leftsidebar{
@@ -244,8 +248,7 @@ aside .leftsidebar{
   font-size: 12px;
   background: #ffffff;
   overflow-y: scroll;
-  min-height: 320px !important;
-  max-height: 320px !important;
+height: 70vh !important;
   overflow-y: scroll
 
 }
@@ -408,7 +411,7 @@ aside .leftsidebar{
    flex-grow: 1;
    /* height: 100vh; */
 
-   min-height: 400px;
+   /* min-height: 400px; */
    background: #f9f9f9;
  }
 
@@ -476,6 +479,11 @@ aside .leftsidebar{
    align-items: center;
    cursor: grab;
    /* background-color: #0d00ff; */
+ }
+
+ .bottom-bar{
+  /* background-color: #222047; */
+  /* height: 10vh !important; */
  }
 
 
@@ -555,11 +563,11 @@ aside .leftsidebar{
  }
 
  .state-node .react-flow__handle-bottom {
-   bottom: -66px !important;
+   bottom: -76px !important;
  }
 
  .state-node .react-flow__handle-top {
-   top: -66px !important;
+   top: -76px !important;
  }
 
  .react-flow .react-flow__handle-top {
@@ -580,7 +588,7 @@ aside .leftsidebar{
 
  .state-node {
    width: 400PX !important;
-   height: 140px;
+   height: 160px;
    overflow: hidden !important;
    border: 2px solid #053c5e;
    background-color: #053c5e23 !important;

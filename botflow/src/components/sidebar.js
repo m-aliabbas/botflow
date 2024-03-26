@@ -62,6 +62,7 @@ export default () => {
       // Additional error handling here, if necessary
     }
     // Reset form and close modal after submission
+    setRefreshKey((oldKey) => oldKey + 1);
     setText("");
     setSelectedState(""); // Optionally reset selected state to "None"
     handleClose();
