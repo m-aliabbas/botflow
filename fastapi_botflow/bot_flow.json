@@ -1,38 +1,168 @@
 {
     "S_Hello ": {
-        "sec": "18",
-        "fileName": "transfer.wav.wav",
+        "sec": "4",
+        "fileName": "index.html",
         "reb_state": true,
-        "qq_state": true,
+        "qq_state": false,
+        "Not Spoke ": {
+            "fileName": "index.html",
+            "next_state": "disp_NP "
+        },
+        "Positive ": {
+            "fileName": "main.css",
+            "next_state": "disp_NP "
+        },
+        "Answering Machine ": {
+            "fileName": "index1.html",
+            "next_state": "disp_ANS "
+        },
+        "DNC ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
         "None ": {
-            "fileName": "AB Q.wav.wav",
-            "next_state": "disp_N "
-        },
-        "BUSY ": {
-            "fileName": "pitch-2.wav.wav",
-            "next_state": "disp_N "
-        },
-        "ANS ": {
-            "fileName": "pitch-1.wav.wav",
-            "next_state": "disp_N "
+            "fileName": "",
+            "next_state": "disp_DNC "
         }
     },
     "S_Intro": {
-        "sec": "18",
-        "fileName": "transfer.wav.wav",
+        "sec": "4",
+        "fileName": "index.html",
+        "reb_state": true,
+        "qq_state": false,
+        "Not Spoke ": {
+            "fileName": "index.html",
+            "next_state": "disp_NP "
+        },
+        "Positive ": {
+            "fileName": "main.css",
+            "next_state": "disp_NP "
+        },
+        "Answering Machine ": {
+            "fileName": "index1.html",
+            "next_state": "disp_ANS "
+        },
+        "DNC ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "None ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        }
+    },
+    "S_Pitch ": {
+        "sec": "50",
+        "fileName": "index2.html",
         "reb_state": true,
         "qq_state": true,
         "None ": {
-            "fileName": "AB Q.wav.wav",
+            "fileName": "frontend",
+            "next_state": "disp_LBR "
+        },
+        "Answering Machine ": {
+            "fileName": "",
+            "next_state": "disp_ANS "
+        },
+        "Negative ": {
+            "fileName": "index.html",
             "next_state": "disp_N "
         },
-        "BUSY ": {
-            "fileName": "pitch-2.wav.wav",
+        "DNC ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "Not Spoke ": {
+            "fileName": "Screenshot from 2024-03-17 22-49-52.png",
+            "next_state": "S_Pitch "
+        },
+        "Busy ": {
+            "fileName": "",
+            "next_state": "S_Busy "
+        }
+    },
+    "S_QQ_1 ": {
+        "sec": "50",
+        "fileName": "index2.html",
+        "reb_state": true,
+        "qq_state": true,
+        "Not Spoke ": {
+            "fileName": "Data.zip",
             "next_state": "disp_N "
         },
-        "ANS ": {
-            "fileName": "pitch-1.wav.wav",
+        "Answering Machine ": {
+            "fileName": "Laravel.zip",
+            "next_state": "disp_NP "
+        },
+        "Positive ": {
+            "fileName": "Screenshot from 2024-03-19 17-10-59.png",
+            "next_state": "disp_DNC "
+        },
+        "Busy ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        }
+    },
+    "S_QQ_3": {
+        "sec": "5",
+        "fileName": "index2.html",
+        "reb_state": true,
+        "qq_state": true,
+        "Not Spoke ": {
+            "fileName": "Data.zip",
             "next_state": "disp_N "
+        },
+        "Positive ": {
+            "fileName": "Screenshot from 2024-03-19 17-10-59.png",
+            "next_state": "disp_DNC "
+        },
+        "Busy ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        }
+    },
+    "S_busy": {
+        "sec": "4",
+        "fileName": "index.html",
+        "reb_state": true,
+        "qq_state": false,
+        "Not Spoke ": {
+            "fileName": "index.html",
+            "next_state": "disp_NP "
+        },
+        "Positive ": {
+            "fileName": "main.css",
+            "next_state": "disp_NP "
+        },
+        "Answering Machine ": {
+            "fileName": "index1.html",
+            "next_state": "disp_ANS "
+        },
+        "DNC ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "None ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        }
+    },
+    "S_Positive ": {
+        "sec": "5",
+        "fileName": "index.html",
+        "reb_state": true,
+        "qq_state": true,
+        "Busy ": {
+            "fileName": "",
+            "next_state": "disp_DNC "
+        },
+        "Not Spoke ": {
+            "fileName": "index.html",
+            "next_state": "disp_NP "
+        },
+        "Answering Machine ": {
+            "fileName": "",
+            "next_state": "disp_LBR "
         }
     }
 }

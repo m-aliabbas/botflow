@@ -306,7 +306,7 @@ const PlaceHolderState = () => {
         <div className='button-out'>
             <div className='icon-out'>
        
-            <button className="bottom-button"><NavLink className="nav-link" to="/">
+            <button className="bottom-button"><NavLink className="nav-link" to="/botpanel">
           <HomeIcon/>
                </NavLink></button>
             <button onClick={saveFlowToServer} className="bottom-button">

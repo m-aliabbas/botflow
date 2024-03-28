@@ -1,31 +1,63 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography, Container } from '@mui/material';
+import axios from 'axios';
 import '../index.css';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
+  
+  const navigate = useNavigate(); // Call useNavigate hook here
 
-  const handleLoginSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login clicked');
-    // Implement login logic here
+    const endpoint = isLogin ? 'token' : 'register';
+    const url = `http://localhost:8000/${endpoint}`;
+  
+    try {
+      const formData = new URLSearchParams();
+      const data = isLogin ? formData : JSON.stringify({ username: email, password });
+      const config = {
+        headers: { 'Content-Type': isLogin ? 'application/x-www-form-urlencoded' : 'application/json' },
+      };
+  
+      if (isLogin) {
+        // Login logic remains the same
+        formData.append('username', email);
+        formData.append('password', password);
+        formData.append('grant_type', 'password');
+        
+        const response = await axios.post(url, data, config);
+        localStorage.setItem('token', response.data.access_token); // Adjust as per your API response
+        localStorage.setItem('user_id', response.data.user_id);
+        const userId = response.data.user_id; // Get user_id from response
+  
+        // Redirect to /botpanel with user_id as state
+        navigate('/botpanel');
+      } else {
+        // If not logging in, assume signing up
+        await axios.post(url, data, config);
+        
+        // After successful signup, instead of redirecting, change form to login mode
+        setIsLogin(true); // Switch to login form
+        alert('Signup successful, please login.');
+      }
+    } catch (error) {
+      console.error(isLogin ? 'Login error' : 'Signup error', error);
+      alert(isLogin ? 'Incorrect Username or Password!' : 'Username Already Exists!');
+    }
   };
-
-  const handleSignupSubmit = (e) => {
-    e.preventDefault();
-    console.log('Signup clicked');
-    // Implement signup logic here
-  };
-
+  
+  
   return (
     <Container component="main" maxWidth="xs">
       <div className="paper">
         <Typography component="h1" variant="h5">
           {isLogin ? 'Login' : 'Sign Up'}
         </Typography>
-        <form className="form" onSubmit={isLogin ? handleLoginSubmit : handleSignupSubmit}>
+        <form className="form" noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -38,9 +70,6 @@ function Login() {
             autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={{ borderColor: 'black' }}
-            InputProps={{ style: { color: 'black' } }}
-            InputLabelProps={{ style: { color: 'black' } }}
           />
           <TextField
             variant="outlined"
@@ -54,9 +83,6 @@ function Login() {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ borderColor: 'black' }}
-            InputProps={{ style: { color: 'black' } }}
-            InputLabelProps={{ style: { color: 'black' } }}
           />
           <Button
             type="submit"
@@ -69,8 +95,8 @@ function Login() {
             {isLogin ? 'Login' : 'Sign Up'}
           </Button>
         </form>
-        <Typography component="p">
-          {isLogin ? "Don't have an account?" : "Already have an account?"}
+        <Typography component="p" style={{ marginTop: '10px' }}>
+          {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
           <Button onClick={() => setIsLogin(!isLogin)} color="primary">
             {isLogin ? 'Sign Up' : 'Login'}
           </Button>

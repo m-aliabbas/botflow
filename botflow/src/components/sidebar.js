@@ -6,6 +6,7 @@ import { useState, useEffect} from 'react';
 import { Modal, Box, TextField,IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Select, MenuItem } from '@mui/material';
+import { useLocation, Link } from 'react-router-dom';
 const { server_address} = require('./config');
 const style = {
   position: 'absolute',
@@ -31,7 +32,8 @@ export default () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [selectedState, setSelectedState] = useState('');
-
+  const location = useLocation();
+  const clientId = location.state ? location.state.clientId : 'default_user_id';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,6 +42,7 @@ export default () => {
       const payload = {
         text: text,
         selectedState: selectedState, // This is the new part
+        clientId:clientId, // This is the new part
       };
       console.log(payload);
       const response = await fetch(server_address + 'save-state/', {
@@ -71,7 +74,7 @@ export default () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(server_address+'get-states/');
+      const response = await fetch(server_address+`get-states/${clientId}`);
       if (response.ok) {
         const data = await response.json();
         setClassNames(data); // Update the state with the data
@@ -149,8 +152,9 @@ export default () => {
     </div>
 
 <div className="dndnode">
-<div className="description">STATES
-<div  onClick={handleOpen} >
+  <div className="description">
+  STATES
+  <div  onClick={handleOpen} >
            <AddIcon className='bottom-add-icon'/>
           </div>
           </div>

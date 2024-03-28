@@ -23,6 +23,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddBottomPart from './AddBottomPart';
+import { useLocation, Link } from 'react-router-dom';
 const { server_address } = require('./config');
 const initialNodes = [
   {
@@ -49,6 +50,9 @@ const Home = () => {
   const [isStateNodeAdded, setStateNodeAdded] = useState(false);
 
   const [baseNodeCounter, setCounterNode] = useState(0); //ALI
+  
+  const location = useLocation(); // Hook to access location state
+  const client_id = location.state?.clientId; // Access clientId passed as state
   let counter = 0; // ALI
 
   const onInputChange = useCallback((nodeId, inputValue) => {
@@ -115,7 +119,7 @@ const Home = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ nodes, edges }),
+        body: JSON.stringify({ client_id, nodes, edges  }),
       });
       const data = await response.json();
       alert('Flow saved successfully!');
@@ -297,7 +301,7 @@ const Home = () => {
           <div className='button-out'>
             <div className='icon-out'>
        
-            <button className="bottom-button"><NavLink className="nav-link" to="/">
+            <button className="bottom-button"><NavLink className="nav-link" component={Link} to="/botpanel">
           <HomeIcon/>
                </NavLink></button>
             <button onClick={saveFlowToServer} className="bottom-button">
